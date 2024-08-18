@@ -54,8 +54,7 @@ regd_users.post("/login", (req,res) => {
   }
 });
 
-// Add a book review
-// reviews : { "user123": "5/5 - I couldn't stop reading!"}
+// Add or modify a book review
 regd_users.put("/auth/review/:isbn", (req, res) => {
   const isbn = req.params.isbn
   const book = books[isbn]
@@ -71,6 +70,21 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
   res.status(200).send(JSON.stringify(book, null, 4));
   
 });
+
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+  const isbn = req.params.isbn
+  const book = books[isbn]
+  
+  if (!book) {
+    return res.status(404).send({ error: "No book found" })
+  }
+  
+  const username = req.session.authorization.username 
+  delete book.reviews[username]
+  
+  res.status(200).send(JSON.stringify(book, null, 4));
+    
+})
 
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
