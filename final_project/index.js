@@ -11,8 +11,6 @@ app.use(express.json());
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
 
 // Authentication Mechanism
-
-/* Commenting out authorization to test CRUD without Auth for Tasks 1-5
 app.use("/customer/auth/*", function auth(req, res, next) {
     // check to see if user is logged in and has a valid token
     if (req.session.authorization) {
@@ -29,7 +27,6 @@ app.use("/customer/auth/*", function auth(req, res, next) {
         return res.status(403).json({ message: "User not logged in" });
     }
 });
-*/
 
 const PORT =5000;
 
